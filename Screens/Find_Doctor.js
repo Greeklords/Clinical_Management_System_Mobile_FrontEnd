@@ -1,13 +1,39 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Button,Image } from 'react-native';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AppButton from '../Components/AppButton';
+import axios from 'axios';
 
 
 const Find_Doctor = () => {
 
     const navigation = useNavigation();
+
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+      axios
+        .get('http://192.168.43.68:4000/doctor/displaydoctors')
+        .then((res) => {          
+          console.log(res.data);
+          setComments(res.data);
+        })      
+        .catch((error) => {
+          console.log(error);
+        });
+    }, []);
+
+
+      // const getAllData = () => {
+      //   //   axios
+      //   //     .get('http://192.168.8.103:4000/onlinePatient/displayOnline')
+      //   //     .then(response => {
+      //   //       console.log(JSON.stringify(response.data))
+      //   //     })
+      //   //     .catch(error => console.error(error));
+      //   // };
+  
 
     
 
@@ -17,39 +43,36 @@ const Find_Doctor = () => {
             <Text></Text>
 
             <TouchableOpacity style={styles.card1} >
-                <Text style={styles.cardText}>Profile</Text>
-                <Text></Text>
+               <Text></Text>
+              
+                {comments.map((row, index) => (
+                <View key={index}>    
 
+                 <Text style={styles.cardText}>Dr.{row.firstname} {row.lastname}</Text>
                 <Image style={styles.cardImage} source={require('../assets/img/request.png')} />
                 <Text></Text>
-                <Text>Name: D.M.M.K. Dissanayake</Text>
-                <Text>Ms Medicine MBBS</Text>
-                <Text>Experience: 10+ years</Text>
 
+                  <Text> First Name : {row.firstname}</Text>
+                  <Text> Last Name : {row.lastname}</Text>
+                  <Text> Working Hospital: {row.workingHospital}</Text>
+                  <Text> University : {row.university}</Text>
+                  <Text> Email: {row.email}</Text>
+                  <AppButton
+              //title="Continue" onPress={ContinuePressed}
+              title="Book Appointment" onPress={() => navigation.navigate('Channel_a_Doctor')}
+              />
+                  <Text></Text>                         
+                </View>
+                ))}
+                
+             
 
                 <Text></Text>
-                <AppButton
+                {/* <AppButton
               //title="Continue" onPress={ContinuePressed}
               title="Book Appoinment" onPress={() => navigation.navigate('Channel_a_Doctor')}
 
-              />
-               <Text></Text>
-               
-               <Text></Text>
-               <Text style={styles.cardText}>Profile</Text>
-                <Image style={styles.cardImage} source={require('../assets/img/request.png')} />
-                <Text></Text>
-                <Text>Name: A.L.Perera</Text>
-                <Text>Ms Medicine MBBS</Text>
-                <Text>Experience: 10+ years</Text>
-
-
-                <Text></Text>
-                <AppButton
-              //title="Continue" onPress={ContinuePressed}
-              title="Book Appoinment" onPress={() => navigation.navigate('Channel_a_Doctor')}
-
-              />
+              /> */}
                 
                 <View>
  

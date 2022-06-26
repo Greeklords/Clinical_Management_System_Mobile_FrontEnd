@@ -26,7 +26,7 @@ const appValidationSchema = Yup.object().shape({
   requestedDate: Yup.date().required().label("Requested_date"),
   EffectedDate: Yup.date().required().label("Effected_date"),
   doctorDescription: Yup.string().required().label("Doctor_description"),
-  other_recomondation: Yup.string().required().label("Other_recomondation"),
+  other_recomendation: Yup.string().required().label("Other_recomendation"),
   recemendedDateDuration: Yup.number().required().label("Duration"),
   DoctorName: Yup.string().required().label("Doctor_Name"),
   Designation: Yup.string().required().label("Designation"),
@@ -46,60 +46,13 @@ const Req_medical_report = ({ navigation }) => {
   const [requestedDate, setrequestedDate] = React.useState("")
   const [EffectedDate, setEffectedDate] = React.useState("")
   const [doctorDescription, setdoctorDescription] = React.useState("")
-  const [other_recomondation, setother_recomondation] = React.useState("")
+  const [other_recomendation, setother_recomendation] = React.useState("")
   const [recemendedDateDuration, setrecemendedDateDuration] = React.useState("")
   const [DoctorName, setDoctorName] = React.useState("")
   const [Designation, setDesignation] = React.useState("")
   const [isseedDate, setisseedDate] = React.useState("")
 
-  // function ContinuePressed() {
-  //   var axios = require('axios');
-  //   var data = JSON.stringify({
-  //     firstname: firstname,
-  //     lastname:lastname,
-  //     OPD_no: OPD_no,
-  //     reciep_no:reciep_no,
-  //     workingplace:workingplace,
-  //     address: address,
-  //     requestedDate: requestedDate,
-  //     EffectedDate: EffectedDate,
-  //     doctorDescription:doctorDescription,
-  //     other_recomondation:other_recomondation,
-  //     recemendedDateDuration:recemendedDateDuration,
-  //     DoctorName:DoctorName,
-  //     Designation:Designation,
-  //     isseedDate:isseedDate
-  //   });
-
-
-  //   var config = {
-  //     method: 'post',
-  //     url: 'http://192.168.43.68:4004/onlinePatient/addOnline',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: data
-  //   };
-
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(JSON.stringify(response.data));
-  //        navigation.navigate('Payment')
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-
-  // const getAllData = () => {
-  //   axios
-  //     .get('http://192.168.8.103:4000/MedicalReport/displayOnline')
-  //     .then(response => {
-  //       console.log(JSON.stringify(response.data))
-  //     })
-  //     .catch(error => console.error(error));
-  // };
-
+  
   const postData = (data) => {
     console.log(data);
     const payload = {
@@ -109,10 +62,10 @@ const Req_medical_report = ({ navigation }) => {
       reciep_no: data.reciep_no,
       workingplace: data.workingplace,
       address: data.address,
-      requestedDate: data.requestedDate,
-      EffectedDDate: data.EffectedDate,
+      reqestedDate: data.requestedDate,
+      EffectedDate: data.EffectedDate,
       doctorDescription: data.doctorDescription,
-      other_recomondation: data.other_recomondation,
+      other_recomendation: data.other_recomendation,
       recemendedDateDuration: data.recemendedDateDuration,
       DoctorName: data.DoctorName,
       Designation: data.Designation,
@@ -124,6 +77,9 @@ const Req_medical_report = ({ navigation }) => {
         console.log(JSON.stringify(response.data))
       })
       .catch(err=>console.log(err))
+
+
+      navigation.navigate("Get_medical_report")
   };
 
 
@@ -137,7 +93,7 @@ const Req_medical_report = ({ navigation }) => {
         <Text></Text>
         <Text >First Name</Text>
         <Formik
-          initialValues={{ firstname: '', lastname: '', OPD_no: '', reciep_no: '', workingplace: '', address: '', requestedDate: '', EffectedDate: '', doctorDescription: '', other_recomondation: '', recemendedDateDuration: '', DoctorName: '', Designation: '', isseedDate: '' }}
+          initialValues={{ firstname: '', lastname: '', OPD_no: '', reciep_no: '', workingplace: '', address: '', requestedDate: '', EffectedDate: '', doctorDescription: '', other_recomendation: '', recemendedDateDuration: '', DoctorName: '', Designation: '', isseedDate: '' }}
           onSubmit={(values)=>postData(values)}
           // onSubmit={()=>navigation.navigate('Payment')}
           validationSchema={appValidationSchema}
@@ -248,17 +204,17 @@ const Req_medical_report = ({ navigation }) => {
               <Text style={styles.err}>{errors.doctorDescription}</Text>
 
 
-              <Text >Other Recomondation</Text>
+              <Text >Other Recomendation</Text>
               <View style={styles.inputboxcontainer}>
 
 
                 <TextInput style={styles.inputbox}
 
-                  onChangeText={handleChange("other_recomondation")}
+                  onChangeText={handleChange("other_recomendation")}
                 //value={address}
                 />
               </View>
-              <Text style={styles.err}>{errors.other_recomondation}</Text>
+              <Text style={styles.err}>{errors.other_recomendation}</Text>
 
 
 

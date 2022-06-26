@@ -12,8 +12,9 @@ import Pay from './Screens/Pay';
 import Find_Doctor from './Screens/Find_Doctor';
 import Details from './Screens/Details';
 import AppButton from './Components/AppButton';
+import History from './Screens/History';
 import Test from './Screens/Test';
-
+import Get_medical_report from './Screens/Get_medical_report';
 
 
 
@@ -55,11 +56,10 @@ export default function App() {
         <Stack.Screen name='Details' component={Details} />
         <Stack.Screen name='AppButton' component={AppButton} />
         <Stack.Screen name='Test' component={Test} />
-
-
-
-
-
+        <Stack.Screen name='History' component={History}/>
+        <Stack.Screen name='Get_medical_report' component={Get_medical_report}/>
+        
+       
       </Stack.Navigator>
 
 

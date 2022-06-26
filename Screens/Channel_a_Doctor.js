@@ -1,9 +1,15 @@
-import React ,{useState} from 'react'; 
-import { View, TextInput, Button, Text, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import React ,{useState,useEffect} from 'react'; 
+import { View, TextInput, Button, Text, StyleSheet,LogBox} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicon from "react-native-vector-icons/Ionicons"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import AppButton from '../Components/AppButton';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { ScrollView } from 'react-native-virtualized-view';
+import DatePicker from 'react-native-datepicker';
+
+
+
 
 
 
@@ -21,14 +27,15 @@ const mobileRegex = RegExp(
 
 const appValidationSchema = Yup.object().shape({
 
-  specialization: Yup.string().required().label("Specialization"),
+  category: Yup.string().required().label("category"),
   doctorname: Yup.string().required().label("Doctorname"),
+  doctorId:Yup.string().required().label("doctorId"),
   date: Yup.date().required().label("Date"),
   charges: Yup.number().required().label("Charges"),
   firstname: Yup.string().required().max(20).label("Firstname"),
   lastname: Yup.string().required().max(20).label(" Lastname"),
   dob: Yup.date().required().label(" Date of Birth"),
-  mobileno: Yup.string().required().matches(mobileRegex, "Invalid Mobile Number").label("Mobile Number"),
+  mobileno: Yup.string().required().matches(mobileRegex,"Invalid Mobile Number").label("Mobile Number"),
   email: Yup.string().required().email().label("Email"),
   address: Yup.string().required().max(50).label("Address"),
 
@@ -38,9 +45,13 @@ const Channel_a_Doctor = ({ navigation }) => {
 
   //const navigation = useNavigation();
 
-  const [specialization, setSpecialization] = React.useState("");
+
+
+
+  //const [specialization, setSpecialization] = React.useState("");
   const [doctorname, setdoctorname] = React.useState("")
-  const [date, setdate] = React.useState("")
+  const [doctorId, setdoctorId] = React.useState("")
+  const [date, setDate] = useState('09-10-2020');
   const [charges, setcharges] = React.useState("")
   const [firstname, setfirstname] = React.useState("")
   const [lastname, setlastname] = React.useState("")
@@ -49,54 +60,31 @@ const Channel_a_Doctor = ({ navigation }) => {
   const [email, setemail] = React.useState("")
   const [address, setaddress] = React.useState("")
 
-  // function ContinuePressed() {
-  //   var axios = require('axios');
-  //   var data = JSON.stringify({
-  //     specialization: specialization,
-  //     doctorname: doctorname,
-  //     date: date,
-  //     charges: charges,
-  //     firstname: firstname,
-  //     lastname: lastname,
-  //     dob: dob,
-  //     mobileno: mobileno,
-  //     email: email,
-  //     address: address
-  //   });
 
-  //   var config = {
-  //     method: 'post',
-  //     url: 'http://localhost:4000/onlinePatient/addOnline',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: data
-  //   };
+  // useEffect(()=>{
+  //   //setOpen(false)
+  //   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  //   LogBox.ignoreLogs(['componentWillReceiveProps has been renamed, and is not recommended for use.']);
 
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(JSON.stringify(response.data));
-  //        navigation.navigate('Payment')
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
+  // })
 
-  // const getAllData = () => {
-  //   axios
-  //     .get('http://192.168.8.103:4000/onlinePatient/displayOnline')
-  //     .then(response => {
-  //       console.log(JSON.stringify(response.data))
-  //     })
-  //     .catch(error => console.error(error));
-  // };
+  const [category, setcategory] = useState(null);
+  const [categoryList, setcategoryList] = useState([
+    {label: 'Apple', value: 'apple',name:'Apple'},
+    {label: 'Banana', value: 'banana',name:'Banana'}
+    
+
+  ]);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  
 
   const postData = (data) => {
     console.log(data);
     const payload={
-      specialization:data.specialization,
+      category:data.category,
       doctorname:data.doctorname,
+      doctorId:data.doctorId,
       date:data.date,
       charges:data.charges,
       firstname:data.firstname,
@@ -110,12 +98,14 @@ const Channel_a_Doctor = ({ navigation }) => {
       .post('http://192.168.43.68:4000/onlinePatient/addOnlinePatient', payload)
       .then(response => {
         console.log(JSON.stringify(response.data))
+
       }) 
+
+
 
       navigation.navigate("Payment")
 
 
-    
       
   };
 
@@ -128,24 +118,51 @@ const Channel_a_Doctor = ({ navigation }) => {
         <Button title='POST' onPress={postData}/> */}
 
         <Text></Text>
-        <Text >Specialization</Text>
+        <Text >Category</Text>
         <Formik
-          initialValues={{ specialization: '', doctorname: '', date: '', firstname: '', lastname: '', dob: '', mobileno: '', email: '', address: '' }}
+          initialValues={{ category: '', doctorname: '', doctorId:'',date: '', firstname: '', lastname: '', dob: '', mobileno: '', email: '', address: '' }}
           onSubmit={(values) =>postData(values)}
           // onSubmit={()=>navigation.navigate('Payment')}
           validationSchema={appValidationSchema}
         >
           {({ handleChange, handleSubmit, errors }) => (
             <>
-              <View style={styles.inputboxcontainer}>
+              {/*<View style={styles.inputboxcontainer}>
+              </View>*/}
+                
+        
 
-                <Ionicon name="medkit-outline" size={30} />
+                {/* <Ionicon name="medkit-outline" size={30} />
                 <TextInput style={styles.inputbox}
                   onChangeText={handleChange("specialization")}
                 // value={specialization}
-                />
-              </View>
-              <Text style={styles.err}>{errors.specialization}</Text>
+                /> */}
+
+                <DropDownPicker style={styles.dropdown}
+                    open={open}
+                    value={category}
+
+                  
+                    items={categoryList.map((categoryList, index) => ({
+                      value: categoryList.value,
+                      key: 'key-' + index,
+                      label: categoryList.name,
+                    }))}
+  
+                    setOpen={setOpen}
+                    setValue={setcategory}
+                    //setItems={setItems}
+                    onChangeText={() => handleChange("category")}
+
+                  />
+
+    
+
+
+
+                
+
+              <Text style={styles.err}>{errors.category}</Text>
 
               <Text >Doctor Name</Text>
               <View style={styles.inputboxcontainer}>
@@ -158,8 +175,54 @@ const Channel_a_Doctor = ({ navigation }) => {
               </View>
               <Text style={styles.err}>{errors.doctorname}</Text>
 
-              <Text>Date</Text>
+              <Text >Doctor Id</Text>
               <View style={styles.inputboxcontainer}>
+
+                <FontAwesome name="user-md" size={30} />
+                <TextInput style={styles.inputbox}
+                  onChangeText={handleChange("doctorId")}
+                // value={doctorname}
+                />
+              </View>
+              <Text style={styles.err}>{errors.doctorId}</Text>
+
+              <Text>Date</Text>
+
+              <DatePicker
+          style={styles.datePickerStyle}
+          date={date} //initial date from state
+          mode="date" //The enum of date, datetime and time
+          placeholder="select date"
+          format="DD-MM-YYYY"
+          minDate="01-01-2016"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              //display: 'none',
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0,
+            },
+            dateInput: {
+              marginLeft: 36,
+              borderColor:'white',
+            },
+          }}
+          onDateChange={(dates) => {
+
+            setDate(dates);
+            console.log(date);
+
+            handleChange("date")
+            
+
+          }}
+        />
+
+              {/* <View style={styles.inputboxcontainer}> 
+
 
                 <Ionicon name="today-outline" size={30} />
                 <TextInput style={styles.inputbox} placeholder="yyyy-mm-dd"
@@ -167,7 +230,7 @@ const Channel_a_Doctor = ({ navigation }) => {
                   onChangeText={handleChange("date")}
                 //value={date}
                 />
-              </View>
+              </View> */}
               <Text style={styles.err}>{errors.date}</Text>
 
               <Text >Charges</Text>
@@ -257,6 +320,15 @@ const Channel_a_Doctor = ({ navigation }) => {
                 />
               </View>
               <Text style={styles.err}>{errors.address}</Text>
+{/* 
+              <DropDownPicker style={styles.dropdown}
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                  /> */}
 
 
               <AppButton
@@ -297,12 +369,14 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     borderColor: 'skyblue',
     paddingHorizontal: 10,
-    paddingTop: 6
+    paddingTop: 6,
+    backgroundColor :"#fff",
 
   },
   inputbox: {
     marginHorizontal: 10,
-    paddingTop: 8
+    paddingTop: 8,
+    
   },
 
   err: {
@@ -313,6 +387,42 @@ const styles = StyleSheet.create({
     marginTop: -4
 
   },
+  dropdown:{
+
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderWidth: 2,
+    borderColor: 'skyblue',
+    margin: 20,
+    textAlign: 'center',
+    //backgroundColor: Colors.Appbackground,
+    flexDirection: "row",
+    padding: 4,
+    borderRadius: 13,
+    width: '90%',
+    marginVertical: 15,
+    borderColor: 'skyblue',
+    paddingHorizontal: 10,
+    paddingTop: 6
+
+  },
+  datePickerStyle: {
+    
+    marginTop: 20,
+    borderWidth: 2,
+    backgroundColor:"#fff",
+  
+   
+    textAlign: 'center',
+    //backgroundColor: Colors.Appbackground,
+    // flexDirection: "row",
+    borderRadius: 13,
+    width: '90%',
+    borderColor: 'skyblue',
+   
+
+  },
+
 
 });
 

@@ -38,7 +38,16 @@ const LogIn = () => {
           <Image style={styles.cardImage} source={require('../assets/img/Ask.png')} />
           <Text style={styles.cardText}>Find your Doctor</Text>
         </TouchableOpacity>
+
         <Text></Text>
+
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('History')}>
+          <Image style={styles.cardImage} source={require('../assets/img/request.png')} />
+          <Text style={styles.cardText}>Appointment History</Text>
+        </TouchableOpacity>
+
+        <Text></Text>
+                <Text></Text>
 
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Test')}>
           <Image style={styles.cardImage} source={require('../assets/img/request.png')} />
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DBECFF',
     marginBottom: 10,
     marginLeft: '2%',
-    width: '90%',
+    width: '100%',
     height: '13%',
     shadowColor: '#000',
     shadowOpacity: 0.2,

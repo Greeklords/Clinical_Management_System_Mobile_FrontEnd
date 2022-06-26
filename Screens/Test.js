@@ -1,24 +1,27 @@
-import { View, Text,TouchableOpacity,Button,StyleSheet,Image,card, TextInput,ScrollView } from 'react-native';
 import React from 'react';
-import { useNavigation } from '@react-navigation/native'; 
-//import DatePicker from 'react-native-neat-date-picker'
+import { View, TextInput, Button, Text, ScrollView,StyleSheet, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+ 
+
+
 
 const Test= () => { 
 
   const navigation = useNavigation(); 
 
-  const [email,setdropdown] = React.useState("")
+  const [email,setemail] = React.useState("")
   
   
   return (
     <ScrollView>
       
-      
+      <Text>Payment successfully!</Text>
       <Text></Text>
  
-      <Text >drop down</Text>
+      <Text >Email</Text>
       <TextInput
-         onChangeText={setdropdown}
+         onChangeText={setemail}
          style={{ borderWidth: 2, borderColor: 'skyblue', margin: 20, textAlign: 'center' }}
          value={email}
       />
@@ -32,3 +35,6 @@ const Test= () => {
 
 
 export default Test;
+
+
+ 
