@@ -22,13 +22,13 @@ const appValidationSchema = Yup.object().shape({
 
   firstname: Yup.string().required().label("firstname"),
   lastname: Yup.string().required().label("lastname"),
-  //collectedDate: Yup.date().required().label("collectedDate"),
+  collectedDate:Yup.string().required().label("collectedDate"),
   dob: Yup.date().required().label("dob"),
   age: Yup.number().required().label("age"),
   mobileno: Yup.string().required().matches(mobileRegex,"Invalid Mobile Number").label("mobileno"),
   email: Yup.string().required().email().label("email"),
   address: Yup.string().required().label("address"),
-  //reportStatus: Yup.string().required().label("reportStatus"),
+  report_status:Yup.string().required().label("report_status")
   
 });
 
@@ -38,13 +38,13 @@ const Req_Lab_report= ({ navigation }) => {
 
   const [firstname, setfirstname] = React.useState("");
   const [lastname, setlastname] = React.useState("")
-  // const [collectedDate, setcollectedDate] = React.useState("")
+  const [collectedDate, setcollectedDate] = React.useState("")
   const [dob, setdob] = React.useState("")
   const [age, setage] = React.useState("")
   const [mobileno, setmobileno] = React.useState("")
   const [email, setemail] = React.useState("")
   const [address, setaddress] = React.useState("")
-  // const [reportStatus, setreportStatus] = React.useState("")
+  const [reportStatus, setreportStatus] = React.useState("")
 
 
   const postData = (data) => {
@@ -53,13 +53,13 @@ const Req_Lab_report= ({ navigation }) => {
      
           firstname:data.firstname,
           lastname:data.lastname ,
-          //collectedDate:data.collectedDate,
+          collectedDate:data.collectedDate,
           dob:data.dob,
           age:data.age,
           mobileno:data.mobileno,
           email:data.email,
           address:data. address,
-          //reportStatus:data.reportStatus,
+          reportStatus:data.reportStatus,
     }
     axios
       .post('http://192.168.43.68:4000/checkupDetails/addCheckupDetails', payload)
@@ -83,13 +83,13 @@ const Req_Lab_report= ({ navigation }) => {
           initialValues={{
           firstname: '',
           lastname: '',
-         // collectedDate: '', 
+          collectedDate: '', 
           dob: '',
           age: '',
           mobileno: '',
           email: '',
           address: '',
-          // reportStatus: '',
+          reportStatus: '',
          
         }}
           onSubmit={(values)=>postData(values)}
@@ -103,7 +103,7 @@ const Req_Lab_report= ({ navigation }) => {
 
                 <TextInput style={styles.inputbox}
                   onChangeText={handleChange("firstname")}
-                // value={specialization}
+               
                 />
               </View>
               <Text style={styles.err}>{errors.firstname}</Text>
@@ -114,12 +114,12 @@ const Req_Lab_report= ({ navigation }) => {
 
                 <TextInput style={styles.inputbox}
                   onChangeText={handleChange("lastname")}
-                // value={doctorname}
+                
                 />
               </View>
               <Text style={styles.err}>{errors.lastname}</Text>
 
-              {/* <Text >collected Date</Text>
+              <Text >collected Date</Text>
               <View style={styles.inputboxcontainer}>
 
                 <Ionicon name="today-outline" 
@@ -128,10 +128,10 @@ const Req_Lab_report= ({ navigation }) => {
                 <TextInput style={styles.inputbox} placeholder="yyyy-mm-dd"
 
                   onChangeText={handleChange("collectedDate")}
-                //value={date}
+               
                 />
               </View>
-              <Text style={styles.err}>{errors.collectedDate}</Text> */}
+              <Text style={styles.err}>{errors.collectedDate}</Text>
 
               <Text >Date of Birth</Text>
               <View style={styles.inputboxcontainer}>
@@ -152,7 +152,7 @@ const Req_Lab_report= ({ navigation }) => {
                 <TextInput style={styles.inputbox} keyboardType='numeric'
                   onChangeText={handleChange("age")}
 
-                //value={firstname}
+                
                 />
               </View>
               <Text style={styles.err}>{errors.age}</Text>
@@ -165,7 +165,6 @@ const Req_Lab_report= ({ navigation }) => {
                 maxLength={10}
                   onChangeText={handleChange("mobileno")}
 
-                //value={lastname}
                 />
               </View>
               <Text style={styles.err}>{errors.mobileno}</Text>
@@ -177,7 +176,7 @@ const Req_Lab_report= ({ navigation }) => {
                   keyboardType="email-address"
 
                   onChangeText={handleChange("email")}
-                //value={date}
+               
                 />
               </View>
               <Text style={styles.err}>{errors.email}</Text>
@@ -188,26 +187,26 @@ const Req_Lab_report= ({ navigation }) => {
                 <TextInput style={styles.inputbox}
 
                   onChangeText={handleChange("address")}
-                //value={mobileno}
+               
                 />
               </View>
               <Text style={styles.err}>{errors.address}</Text>
 
-              {/* <Text >Report Status</Text>
+              <Text >Report Status</Text>
               <View style={styles.inputboxcontainer}>
 
 
                 <TextInput style={styles.inputbox}
 
                   onChangeText={handleChange("reportStatus")}
-                //value={email}
+                
                 />
               </View>
-              <Text style={styles.err}>{errors.reportStatus}</Text> */}
+              <Text style={styles.err}>{errors.reportStatus}</Text>
 
               <AppButton
                 title="Submit Details" onPress={handleSubmit}
-              // onPress={() => navigation.navigate('Payment')}
+          
 
               />
 

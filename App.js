@@ -15,6 +15,7 @@ import AppButton from './Components/AppButton';
 import History from './Screens/History';
 import Test from './Screens/Test';
 import Get_medical_report from './Screens/Get_medical_report';
+import Get_Lab_Report from './Screens/Get_Lab_Report';
 
 
 
@@ -58,6 +59,7 @@ export default function App() {
         <Stack.Screen name='Test' component={Test} />
         <Stack.Screen name='History' component={History}/>
         <Stack.Screen name='Get_medical_report' component={Get_medical_report}/>
+        <Stack.Screen name='Get_Lab_Report' component={Get_Lab_Report}/>
         
        
       </Stack.Navigator>

@@ -27,10 +27,10 @@ const mobileRegex = RegExp(
 
 const appValidationSchema = Yup.object().shape({
 
-  category: Yup.string().required().label("category"),
+  //category: Yup.string().required().label("category"),
   doctorname: Yup.string().required().label("Doctorname"),
   doctorId:Yup.string().required().label("doctorId"),
-  date: Yup.date().required().label("Date"),
+  //date: Yup.date().required().label("Date"),
   charges: Yup.number().required().label("Charges"),
   firstname: Yup.string().required().max(20).label("Firstname"),
   lastname: Yup.string().required().max(20).label(" Lastname"),
@@ -51,7 +51,7 @@ const Channel_a_Doctor = ({ navigation }) => {
   //const [specialization, setSpecialization] = React.useState("");
   const [doctorname, setdoctorname] = React.useState("")
   const [doctorId, setdoctorId] = React.useState("")
-  const [date, setDate] = useState('09-10-2020');
+  const [date, setDate] = useState("");
   const [charges, setcharges] = React.useState("")
   const [firstname, setfirstname] = React.useState("")
   const [lastname, setlastname] = React.useState("")
@@ -59,7 +59,8 @@ const Channel_a_Doctor = ({ navigation }) => {
   const [mobileno, setmobileno] = React.useState("")
   const [email, setemail] = React.useState("")
   const [address, setaddress] = React.useState("")
-
+const[categoryValidate,setCategoryValidate]=useState(false)
+const[dateValidate,setDateValidate]=useState(true)
 
   // useEffect(()=>{
   //   //setOpen(false)
@@ -70,8 +71,8 @@ const Channel_a_Doctor = ({ navigation }) => {
 
   const [category, setcategory] = useState(null);
   const [categoryList, setcategoryList] = useState([
-    {label: 'Apple', value: 'apple',name:'Apple'},
-    {label: 'Banana', value: 'banana',name:'Banana'}
+    {label: 'Obstetricians', value: 'Obstetricians',name:'Obstetricians'},
+    {label: 'Radiologists', value: 'Radiologists',name:'Banana'}
     
 
   ]);
@@ -80,34 +81,46 @@ const Channel_a_Doctor = ({ navigation }) => {
   
 
   const postData = (data) => {
-    console.log(data);
-    const payload={
-      category:data.category,
-      doctorname:data.doctorname,
-      doctorId:data.doctorId,
-      date:data.date,
-      charges:data.charges,
-      firstname:data.firstname,
-      lastname:data.lastname,
-      dob:data.dob,
-      mobileno:data.mobileno,
-      email:data.email,
-      address:data.address
+    if(!validate){
+      
+      console.log(data);
+      const payload={
+        category:category,
+        doctorname:data.doctorname,
+        doctorId:data.doctorId,
+        date:data.date,
+        charges:charges,
+        firstname:data.firstname,
+        lastname:data.lastname,
+        dob:data.dob,
+        mobileno:data.mobileno,
+        email:data.email,
+        address:data.address
+      }
+      axios
+        .post('http://192.168.43.68:4000/onlinePatient/addOnlinePatient', payload)
+        .then(response => {
+          console.log(JSON.stringify(response.data))
+  
+        }) 
+  
+  
+  
+        navigation.navigate("Payment")
     }
-    axios
-      .post('http://192.168.43.68:4000/onlinePatient/addOnlinePatient', payload)
-      .then(response => {
-        console.log(JSON.stringify(response.data))
-
-      }) 
-
-
-
-      navigation.navigate("Payment")
+  
 
 
       
   };
+  const validate=()=>{
+    if(category==""){
+     setCategoryValidate(true)
+    }
+    if(date==""){
+      setDateValidate(false)
+    }
+  }
 
 
   return (
@@ -120,7 +133,7 @@ const Channel_a_Doctor = ({ navigation }) => {
         <Text></Text>
         <Text >Category</Text>
         <Formik
-          initialValues={{ category: '', doctorname: '', doctorId:'',date: '', firstname: '', lastname: '', dob: '', mobileno: '', email: '', address: '' }}
+          initialValues={{ doctorname: '', doctorId:'', firstname: '', lastname: '', dob: '', mobileno: '', email: '', address: '' }}
           onSubmit={(values) =>postData(values)}
           // onSubmit={()=>navigation.navigate('Payment')}
           validationSchema={appValidationSchema}
@@ -152,9 +165,10 @@ const Channel_a_Doctor = ({ navigation }) => {
                     setOpen={setOpen}
                     setValue={setcategory}
                     //setItems={setItems}
-                    onChangeText={() => handleChange("category")}
+                    //onChangeText={() => handleChange("category")}
 
                   />
+                  {categoryValidate?<Text>sample</Text>:null}
 
     
 
@@ -210,12 +224,10 @@ const Channel_a_Doctor = ({ navigation }) => {
               borderColor:'white',
             },
           }}
-          onDateChange={(dates) => {
+          onDateChange={(date) => {
 
-            setDate(dates);
-            console.log(date);
-
-            handleChange("date")
+            setDate(date);
+            
             
 
           }}

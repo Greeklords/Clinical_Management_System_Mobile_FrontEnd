@@ -16,70 +16,64 @@ import * as Yup from 'yup';
 
 
 const appValidationSchema = Yup.object().shape({
+  User_id:Yup.string().required().label("User_id"),
+  Doc_id: Yup.string().required().label("Doc_id"),
+  appoinment_id: Yup.string().required().label("appoinment_id"),
+  workingplace: Yup.string().required().label("workingplace"),
+  medical_status: Yup.string().required().label("medical_status"),
+  first_name: Yup.string().required().label("first_name"),
+  last_name: Yup.string().required().label("last_name"),
+  address: Yup.string().required().label("address"),
+  reqestedDate: Yup.date().required().label("reqestedDate"),
+  Effected_Date: Yup.date().required().label("Effected_Date"),
+  Imageurl: Yup.string().required().label("Imageurl")
 
-  firstname: Yup.string().required().label("Firstname"),
-  lastname: Yup.string().required().label("Lastname"),
-  OPD_no: Yup.string().required().label("Opd_no"),
-  reciep_no: Yup.string().required().label("Reciep_no"),
-  workingplace: Yup.string().required().label("Working_place"),
-  address: Yup.string().required().label("Address"),
-  requestedDate: Yup.date().required().label("Requested_date"),
-  EffectedDate: Yup.date().required().label("Effected_date"),
-  doctorDescription: Yup.string().required().label("Doctor_description"),
-  other_recomendation: Yup.string().required().label("Other_recomendation"),
-  recemendedDateDuration: Yup.number().required().label("Duration"),
-  DoctorName: Yup.string().required().label("Doctor_Name"),
-  Designation: Yup.string().required().label("Designation"),
-  isseedDate: Yup.date().required().label("Date"),
 });
 
 const Req_medical_report = ({ navigation }) => {
 
   //const navigation = useNavigation();
 
-  const [firstname, setfirstname] = React.useState("");
-  const [lastname, setlastname] = React.useState("")
-  const [OPD_no, setOPD_no] = React.useState("")
-  const [reciep_no, setreciep_no] = React.useState("")
+  const [User_id, setUser_id] = React.useState("");
+  const [Doc_id, setDoc_id] = React.useState("");
+  const [appoinment_id, setappoinment_id] = React.useState("")
   const [workingplace, setworkingplace] = React.useState("")
+  const [medical_status, setmedical_status] = React.useState("")
+  const [first_name, setfirst_name] = React.useState("")
+  const [last_name, setlast_name] = React.useState("")
   const [address, setaddress] = React.useState("")
-  const [requestedDate, setrequestedDate] = React.useState("")
-  const [EffectedDate, setEffectedDate] = React.useState("")
-  const [doctorDescription, setdoctorDescription] = React.useState("")
-  const [other_recomendation, setother_recomendation] = React.useState("")
-  const [recemendedDateDuration, setrecemendedDateDuration] = React.useState("")
-  const [DoctorName, setDoctorName] = React.useState("")
-  const [Designation, setDesignation] = React.useState("")
-  const [isseedDate, setisseedDate] = React.useState("")
+  const [reqestedDate, setreqestedDate] = React.useState("")
+  const [Effected_Date, setEffected_Date] = React.useState("")
+  const [Imageurl, setImageurl] = React.useState("")
 
-  
+
+
   const postData = (data) => {
     console.log(data);
     const payload = {
-      firstname: data.firstname,
-      lastname: data.lastname,
-      OPD_no: data.OPD_no,
-      reciep_no: data.reciep_no,
+      User_id:data.User_id,
+      Doc_id: data.Doc_id,
+      appoinment_id: data.appoinment_id,
       workingplace: data.workingplace,
+      medical_status: data.medical_status,
+      workingplace: data.workingplace,
+      first_name: data.first_name,
+      last_name: data.last_name,
       address: data.address,
-      reqestedDate: data.requestedDate,
-      EffectedDate: data.EffectedDate,
-      doctorDescription: data.doctorDescription,
-      other_recomendation: data.other_recomendation,
-      recemendedDateDuration: data.recemendedDateDuration,
-      DoctorName: data.DoctorName,
-      Designation: data.Designation,
-      isseedDate: data.isseedDate
+      reqestedDate: data.reqestedDate,
+      Effected_Date: data.Effected_Date,
+      Imageurl: data.Imageurl,
+
     }
     axios
-      .post('http://192.168.43.68:4004/MedicalReports/add', payload)
+      .post('http://192.168.43.68:4000/MedicalRequest/add', payload)
       .then(response => {
         console.log(JSON.stringify(response.data))
       })
-      .catch(err=>console.log(err))
+      .catch(err => console.log(err))
 
 
-      navigation.navigate("Get_medical_report")
+    navigation.navigate("Payment")
   };
 
 
@@ -91,11 +85,22 @@ const Req_medical_report = ({ navigation }) => {
         <Button title='POST' onPress={postData}/> */}
 
         <Text></Text>
-        <Text >First Name</Text>
+        <Text >User ID</Text>
         <Formik
-          initialValues={{ firstname: '', lastname: '', OPD_no: '', reciep_no: '', workingplace: '', address: '', requestedDate: '', EffectedDate: '', doctorDescription: '', other_recomendation: '', recemendedDateDuration: '', DoctorName: '', Designation: '', isseedDate: '' }}
-          onSubmit={(values)=>postData(values)}
-          // onSubmit={()=>navigation.navigate('Payment')}
+          initialValues={{ 
+            User_id:'',
+            Doc_id: '', 
+            appoinment_id: '', 
+            workingplace: '', 
+            medical_status: '', 
+            first_name: '', 
+            last_name: '', 
+            address: '', 
+            reqestedDate: '', 
+            Effected_Date: '', 
+            Imageurl:'' 
+          }}
+          onSubmit={(values) => postData(values)}
           validationSchema={appValidationSchema}
         >
           {({ handleChange, handleSubmit, errors }) => (
@@ -104,80 +109,104 @@ const Req_medical_report = ({ navigation }) => {
 
 
                 <TextInput style={styles.inputbox}
-                  onChangeText={handleChange("firstname")}
-                // value={specialization}
+                  onChangeText={handleChange("User_id")}
+
                 />
               </View>
-              <Text style={styles.err}>{errors.firstname}</Text>
+              <Text style={styles.err}>{errors.User_id}</Text>
+
+              <Text >Doctor ID</Text>
+              <View style={styles.inputboxcontainer}>
+
+
+                <TextInput style={styles.inputbox}
+                  onChangeText={handleChange("Doc_id")}
+
+                />
+              </View>
+              <Text style={styles.err}>{errors.Doc_id}</Text>
+
+              <Text >Appoinment ID</Text>
+              <View style={styles.inputboxcontainer}>
+
+
+                <TextInput style={styles.inputbox}
+                  onChangeText={handleChange("appoinment_id")}
+
+                />
+              </View>
+              <Text style={styles.err}>{errors.appoinment_id}</Text>
+
+              <Text>Working Place</Text>
+              <View style={styles.inputboxcontainer}>
+
+
+                <TextInput style={styles.inputbox}
+                  onChangeText={handleChange("workingplace")}
+                
+                />
+              </View>
+              <Text style={styles.err}>{errors.workingplace}</Text>
+
+              <Text >Medical Status</Text>
+              <View style={styles.inputboxcontainer}>
+
+
+                <TextInput style={styles.inputbox}
+
+                  onChangeText={handleChange("medical_status")}
+
+                />
+              </View>
+              <Text style={styles.err}>{errors.medical_status}</Text>
+
+              <Text >First Name</Text>
+              <View style={styles.inputboxcontainer}>
+
+
+                <TextInput style={styles.inputbox}
+                  onChangeText={handleChange("first_name")}
+
+
+                />
+              </View>
+              <Text style={styles.err}>{errors.first_name}</Text>
 
               <Text >Last Name</Text>
               <View style={styles.inputboxcontainer}>
 
 
                 <TextInput style={styles.inputbox}
-                  onChangeText={handleChange("lastname")}
-                // value={doctorname}
+                  onChangeText={handleChange("last_name")}
+
+
                 />
               </View>
-              <Text style={styles.err}>{errors.lastname}</Text>
-
-              <Text>OPD Number</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-                  onChangeText={handleChange("OPD_no")}
-                //value={date}
-                />
-              </View>
-              <Text style={styles.err}>{errors.OPD_no}</Text>
-
-              <Text >Recieption Number</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-
-                  onChangeText={handleChange("reciep_no")}
-                //value={charges}
-                />
-              </View>
-              <Text style={styles.err}>{errors.reciep_no}</Text>
-
-              <Text >Working_place</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-                  onChangeText={handleChange("workingplace")}
-
-                //value={firstname}
-                />
-              </View>
-              <Text style={styles.err}>{errors.workingplace}</Text>
+              <Text style={styles.err}>{errors.last_name}</Text>
 
               <Text >Address</Text>
               <View style={styles.inputboxcontainer}>
 
-
                 <TextInput style={styles.inputbox}
+
                   onChangeText={handleChange("address")}
 
-                //value={lastname}
                 />
               </View>
               <Text style={styles.err}>{errors.address}</Text>
 
-              <Text >Requested date</Text>
+              <Text >Reqested Date</Text>
               <View style={styles.inputboxcontainer}>
+
+
                 <Ionicon name="today-outline" size={30} />
                 <TextInput style={styles.inputbox}
 
-                  onChangeText={handleChange("requestedDate")}
-                //value={date}
+                  onChangeText={handleChange("reqestedDate")}
+
                 />
               </View>
-              <Text style={styles.err}>{errors.requestedDate}</Text>
+              <Text style={styles.err}>{errors.reqestedDate}</Text>
 
               <Text >Effected Date</Text>
               <View style={styles.inputboxcontainer}>
@@ -185,91 +214,27 @@ const Req_medical_report = ({ navigation }) => {
                 <Ionicon name="today-outline" size={30} />
                 <TextInput style={styles.inputbox}
 
-                  onChangeText={handleChange("EffectedDate")}
-                //value={mobileno}
+                  onChangeText={handleChange("Effected_Date")}
+
                 />
               </View>
-              <Text style={styles.err}>{errors.EffectedDate}</Text>
+              <Text style={styles.err}>{errors.Effected_Date}</Text>
 
-              <Text >Doctor Description</Text>
+              <Text >Imageurl</Text>
               <View style={styles.inputboxcontainer}>
 
-
+               
                 <TextInput style={styles.inputbox}
 
-                  onChangeText={handleChange("doctorDescription")}
-                //value={email}
-                />
-              </View>
-              <Text style={styles.err}>{errors.doctorDescription}</Text>
-
-
-              <Text >Other Recomendation</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-
-                  onChangeText={handleChange("other_recomendation")}
-                //value={address}
-                />
-              </View>
-              <Text style={styles.err}>{errors.other_recomendation}</Text>
-
-
-
-              <Text >Duration</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-
-                  onChangeText={handleChange("recemendedDateDuration")}
-                //value={address}
-                />
-              </View>
-              <Text style={styles.err}>{errors.recemendedDateDuration}</Text>
-
-              <Text >Doctor Name</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-
-                  onChangeText={handleChange("DoctorName")}
-                //value={email
-                />
-              </View>
-              <Text style={styles.err}>{errors.DoctorName}</Text>
-
-
-              <Text >Designation</Text>
-              <View style={styles.inputboxcontainer}>
-
-
-                <TextInput style={styles.inputbox}
-
-                  onChangeText={handleChange("Designation")}
-                //value={address}
-                />
-              </View>
-              <Text style={styles.err}>{errors.Designation}</Text>
-              <Text >Date</Text>
-              <View style={styles.inputboxcontainer}>
-
-                <Ionicon name="today-outline" size={30} />
-                <TextInput style={styles.inputbox}
-
-                  onChangeText={handleChange("isseedDate")}
+                  onChangeText={handleChange("Imageurl")}
 
                 />
               </View>
-              <Text style={styles.err}>{errors.isseedDate}</Text>
-
+              <Text style={styles.err}>{errors.Imageurl}</Text>
 
               <AppButton
                 title="Submit Details" onPress={handleSubmit}
-              // onPress={() => navigation.navigate('Payment')}
+              
 
               />
 

@@ -24,7 +24,7 @@ const History = () => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.43.68:4000/onlinePatient/onlineprofile/62a5cd52d531b1041ca881df')
+      .get('http://192.168.43.68:4000/onlinePatient/onlineprofile/62b95f69e8544337c005351a')
       .then((res) => {          
         console.log(res.data);
         setComments(res.data);
@@ -38,7 +38,7 @@ const History = () => {
   function cancelAppointment(e){
     e.preventDefault();          
     
-      axios.delete(`http://192.168.43.68:4000/onlinePatient/onlineprofile/62a5cd52d531b1041ca881df`).then(()=>{        
+      axios.delete(`http://192.168.43.68:4000/onlinePatient/onlineprofile/62b95f69e8544337c005351a`).then(()=>{        
        // DevSettings.reload();
       }).catch((err)=>{
         alert(err)
